@@ -331,10 +331,6 @@
         }
       ]
     },
-    "identifier": {
-      "type": "PATTERN",
-      "value": "[a-zA-Z_][a-zA-Z0-9_]*"
-    },
     "string": {
       "type": "PATTERN",
       "value": "'[^']*'"
@@ -395,36 +391,64 @@
       }
     },
     "kw_create": {
-      "type": "PATTERN",
-      "value": "[cC][rR][eE][aA][tT][eE]"
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "[cC][rR][eE][aA][tT][eE]"
+      }
     },
     "kw_table": {
-      "type": "PATTERN",
-      "value": "[tT][aA][bB][lL][eE]"
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "[tT][aA][bB][lL][eE]"
+      }
     },
     "kw_if": {
-      "type": "PATTERN",
-      "value": "[iI][fF]"
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "[iI][fF]"
+      }
     },
     "kw_not": {
-      "type": "PATTERN",
-      "value": "[nN][oO][tT]"
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "[nN][oO][tT]"
+      }
     },
     "kw_exists": {
-      "type": "PATTERN",
-      "value": "[nN][oO][tT]"
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "[eE][xX][iI][sS][tT][sS]"
+      }
     },
     "kw_primary": {
-      "type": "PATTERN",
-      "value": "[pP][rR][iI][mM][aA][rR][yY]"
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "[pP][rR][iI][mM][aA][rR][yY]"
+      }
     },
     "kw_key": {
-      "type": "PATTERN",
-      "value": "[kK][eE][yY]"
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "[kK][eE][yY]"
+      }
     },
     "kw_with": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "[wW][iI][tT][hH]"
+      }
+    },
+    "identifier": {
       "type": "PATTERN",
-      "value": "[wW][iI][tT][hH]"
+      "value": "[a-zA-Z_][a-zA-Z0-9_]*"
     }
   },
   "extras": [

@@ -133,16 +133,6 @@
     }
   },
   {
-    "type": "kw_exists",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "kw_not",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "literal",
     "named": true,
     "fields": {},
@@ -287,11 +277,19 @@
     "named": true
   },
   {
+    "type": "kw_exists",
+    "named": true
+  },
+  {
     "type": "kw_if",
     "named": true
   },
   {
     "type": "kw_key",
+    "named": true
+  },
+  {
+    "type": "kw_not",
     "named": true
   },
   {

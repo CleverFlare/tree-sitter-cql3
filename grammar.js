@@ -52,8 +52,6 @@ export default grammar({
 
     literal: ($) => choice($.string, $.number),
 
-    identifier: (_) => /[a-zA-Z_][a-zA-Z0-9_]*/,
-
     string: (_) => /'[^']*'/,
 
     number: (_) => /\d+/,
@@ -68,14 +66,16 @@ export default grammar({
       ),
 
     // keywords
-    kw_create: (_) => kw("create"),
-    kw_table: (_) => kw("table"),
-    kw_if: (_) => kw("if"),
-    kw_not: (_) => kw("not"),
-    kw_exists: (_) => kw("not"),
-    kw_primary: (_) => kw("primary"),
-    kw_key: (_) => kw("key"),
-    kw_with: (_) => kw("with"),
+    kw_create: (_) => token(kw("create")),
+    kw_table: (_) => token(kw("table")),
+    kw_if: (_) => token(kw("if")),
+    kw_not: (_) => token(kw("not")),
+    kw_exists: (_) => token(kw("exists")),
+    kw_primary: (_) => token(kw("primary")),
+    kw_key: (_) => token(kw("key")),
+    kw_with: (_) => token(kw("with")),
+
+    identifier: (_) => /[a-zA-Z_][a-zA-Z0-9_]*/,
   },
 });
 
