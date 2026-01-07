@@ -1,5 +1,21 @@
 [
   {
+    "type": "clustering_keys_definition",
+    "named": true,
+    "fields": {
+      "clustering_key": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "column_definition",
     "named": true,
     "fields": {
@@ -45,6 +61,10 @@
       "types": [
         {
           "type": "column_definition",
+          "named": true
+        },
+        {
+          "type": "primary_key_definition",
           "named": true
         }
       ]
@@ -146,6 +166,49 @@
         },
         {
           "type": "string",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "partition_keys_definition",
+    "named": true,
+    "fields": {
+      "partition_key": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "primary_key_definition",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "clustering_keys_definition",
+          "named": true
+        },
+        {
+          "type": "kw_key",
+          "named": true
+        },
+        {
+          "type": "kw_primary",
+          "named": true
+        },
+        {
+          "type": "partition_keys_definition",
           "named": true
         }
       ]

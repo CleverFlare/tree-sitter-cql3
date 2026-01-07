@@ -12,6 +12,8 @@ export default grammar({
 
   extras: ($) => [/\s/, $.comment],
 
+  word: ($) => $.identifier,
+
   rules: {
     source_file: ($) => semicolonSep1($._statement),
 
@@ -32,7 +34,13 @@ export default grammar({
     table_name: ($) => seq(optional(seq($.identifier, ".")), $.identifier),
 
     column_definitions: ($) =>
-      seq("(", optional(commaSep1($.column_definition)), optional(","), ")"),
+      seq(
+        "(",
+        optional(commaSep1($.column_definition)),
+        optional(seq(",", $.primary_key_definition)),
+        optional(","),
+        ")",
+      ),
 
     column_definition: ($) =>
       seq(
@@ -40,6 +48,25 @@ export default grammar({
         field("type", $.data_types),
         optional($.primary_key_inline),
       ),
+
+    primary_key_definition: ($) =>
+      seq(
+        $.kw_primary,
+        $.kw_key,
+        "(",
+        $.partition_keys_definition,
+        optional(seq(",", $.clustering_keys_definition)),
+        ")",
+      ),
+
+    partition_keys_definition: ($) =>
+      choice(
+        field("partition_key", $.identifier),
+        seq("(", commaSep1(field("partition_key", $.identifier)), ")"),
+      ),
+
+    clustering_keys_definition: ($) =>
+      commaSep1(field("clustering_key", $.identifier)),
 
     primary_key_inline: ($) => seq($.kw_primary, $.kw_key),
 
