@@ -7,32 +7,49 @@
       "type": "SEQ",
       "members": [
         {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "_statement"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            },
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": ";"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "_statement"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
           "type": "CHOICE",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "_statement"
+              "type": "STRING",
+              "value": ";"
             },
             {
               "type": "BLANK"
             }
           ]
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "STRING",
-                "value": ";"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "_statement"
-              }
-            ]
-          }
         }
       ]
     },
@@ -44,6 +61,27 @@
           "name": "create_table_statement"
         }
       ]
+    },
+    "literal": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "string"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "number"
+        }
+      ]
+    },
+    "string": {
+      "type": "PATTERN",
+      "value": "'[^']*'"
+    },
+    "number": {
+      "type": "PATTERN",
+      "value": "\\d+"
     },
     "create_table_statement": {
       "type": "SEQ",
@@ -269,6 +307,19 @@
         }
       ]
     },
+    "primary_key_inline": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "kw_primary"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "kw_key"
+        }
+      ]
+    },
     "primary_key_definition": {
       "type": "SEQ",
       "members": [
@@ -407,19 +458,6 @@
         }
       ]
     },
-    "primary_key_inline": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "kw_primary"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "kw_key"
-        }
-      ]
-    },
     "data_types": {
       "type": "CHOICE",
       "members": [
@@ -453,11 +491,55 @@
           "name": "kw_with"
         },
         {
-          "type": "REPEAT1",
-          "content": {
-            "type": "SYMBOL",
-            "name": "table_option"
-          }
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "table_option"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "clustering_order_by_clause"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "id_clause"
+                }
+              ]
+            },
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "kw_and"
+                  },
+                  {
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "SYMBOL",
+                        "name": "table_option"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "clustering_order_by_clause"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "id_clause"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
         }
       ]
     },
@@ -478,26 +560,64 @@
         }
       ]
     },
-    "literal": {
-      "type": "CHOICE",
+    "clustering_order_by_clause": {
+      "type": "SEQ",
       "members": [
         {
           "type": "SYMBOL",
-          "name": "string"
+          "name": "kw_clustering"
         },
         {
           "type": "SYMBOL",
-          "name": "number"
+          "name": "kw_order"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "kw_by"
+        },
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "kw_asc"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "kw_desc"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": ")"
         }
       ]
     },
-    "string": {
-      "type": "PATTERN",
-      "value": "'[^']*'"
-    },
-    "number": {
-      "type": "PATTERN",
-      "value": "\\d+"
+    "id_clause": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "kw_id"
+        },
+        {
+          "type": "STRING",
+          "value": "="
+        },
+        {
+          "type": "SYMBOL",
+          "name": "string"
+        }
+      ]
     },
     "comment": {
       "type": "TOKEN",
@@ -604,6 +724,55 @@
       "content": {
         "type": "PATTERN",
         "value": "[wW][iI][tT][hH]"
+      }
+    },
+    "kw_clustering": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "[cC][lL][uU][sS][tT][eE][rR][iI][nN][gG]"
+      }
+    },
+    "kw_order": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "[oO][rR][dD][eE][rR]"
+      }
+    },
+    "kw_by": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "[bB][yY]"
+      }
+    },
+    "kw_asc": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "[aA][sS][cC]"
+      }
+    },
+    "kw_desc": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "[dD][eE][sS][cC]"
+      }
+    },
+    "kw_id": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "[iI][dD]"
+      }
+    },
+    "kw_and": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "[aA][nN][dD]"
       }
     },
     "identifier": {

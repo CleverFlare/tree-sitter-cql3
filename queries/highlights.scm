@@ -2,15 +2,26 @@
 ;; Keywords
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(kw_create)   @keyword
-(kw_table)    @keyword
-(kw_primary)  @keyword
-(kw_key)      @keyword
+[
+  (kw_create)
+  (kw_table)
+  (kw_primary)
+  (kw_key)
+] @keyword
 
-(kw_if)       @keyword.control
-(kw_not)      @keyword.control
-(kw_exists)   @keyword.control
-(kw_with)     @keyword.control
+[
+  (kw_if)
+  (kw_not)
+  (kw_exists)
+  (kw_with)
+  (kw_clustering)
+  (kw_order)
+  (kw_by)
+  (kw_id)
+  (kw_and)
+  (kw_asc)
+  (kw_desc)
+] @keyword.control
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -60,6 +71,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 "," @punctuation.delimiter
+
+";" @punctuation.delimiter
 
 "(" @punctuation.bracket
 ")" @punctuation.bracket

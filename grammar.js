@@ -15,9 +15,15 @@ export default grammar({
   word: ($) => $.identifier,
 
   rules: {
-    source_file: ($) => semicolonSep1($._statement),
+    source_file: ($) => seq(semicolonSep1($._statement), optional(";")),
 
     _statement: ($) => choice($.create_table_statement),
+
+    literal: ($) => choice($.string, $.number),
+
+    string: (_) => /'[^']*'/,
+
+    number: (_) => /\d+/,
 
     create_table_statement: ($) =>
       seq(
@@ -49,6 +55,8 @@ export default grammar({
         optional($.primary_key_inline),
       ),
 
+    primary_key_inline: ($) => seq($.kw_primary, $.kw_key),
+
     primary_key_definition: ($) =>
       seq(
         $.kw_primary,
@@ -68,20 +76,32 @@ export default grammar({
     clustering_keys_definition: ($) =>
       commaSep1(field("clustering_key", $.identifier)),
 
-    primary_key_inline: ($) => seq($.kw_primary, $.kw_key),
-
     data_types: (_) =>
       choice(kw("int"), kw("text"), kw("uuid"), kw("boolean"), kw("timestamp")),
 
-    with_clause: ($) => seq($.kw_with, repeat1($.table_option)),
+    with_clause: ($) =>
+      seq(
+        $.kw_with,
+        kwSep1(
+          choice($.table_option, $.clustering_order_by_clause, $.id_clause),
+          $.kw_and,
+        ),
+      ),
 
     table_option: ($) => seq($.identifier, "=", $.literal),
 
-    literal: ($) => choice($.string, $.number),
+    clustering_order_by_clause: ($) =>
+      seq(
+        $.kw_clustering,
+        $.kw_order,
+        $.kw_by,
+        "(",
+        $.identifier,
+        choice($.kw_asc, $.kw_desc),
+        ")",
+      ),
 
-    string: (_) => /'[^']*'/,
-
-    number: (_) => /\d+/,
+    id_clause: ($) => seq($.kw_id, "=", $.string),
 
     comment: (_) =>
       token(
@@ -101,6 +121,13 @@ export default grammar({
     kw_primary: (_) => token(kw("primary")),
     kw_key: (_) => token(kw("key")),
     kw_with: (_) => token(kw("with")),
+    kw_clustering: (_) => token(kw("clustering")),
+    kw_order: (_) => token(kw("order")),
+    kw_by: (_) => token(kw("by")),
+    kw_asc: (_) => token(kw("asc")),
+    kw_desc: (_) => token(kw("desc")),
+    kw_id: (_) => token(kw("id")),
+    kw_and: (_) => token(kw("and")),
 
     identifier: (_) => /[a-zA-Z_][a-zA-Z0-9_]*/,
   },
@@ -113,6 +140,16 @@ export default grammar({
  */
 function commaSep1(rule) {
   return seq(rule, repeat(seq(",", rule)));
+}
+
+/**
+ * Function for creating a set of rules separated by a keyword
+ * @function
+ * @param {RuleOrLiteral} rule - the rule
+ * @param {SymbolRule<any>} keyword - the keyword
+ */
+function kwSep1(rule, keyword) {
+  return seq(rule, repeat(seq(keyword, rule)));
 }
 
 /**

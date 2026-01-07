@@ -16,6 +16,41 @@
     }
   },
   {
+    "type": "clustering_order_by_clause",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "kw_asc",
+          "named": true
+        },
+        {
+          "type": "kw_by",
+          "named": true
+        },
+        {
+          "type": "kw_clustering",
+          "named": true
+        },
+        {
+          "type": "kw_desc",
+          "named": true
+        },
+        {
+          "type": "kw_order",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "column_definition",
     "named": true,
     "fields": {
@@ -128,6 +163,25 @@
     "type": "data_types",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "id_clause",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "kw_id",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "if_not_exists",
@@ -292,6 +346,18 @@
       "required": true,
       "types": [
         {
+          "type": "clustering_order_by_clause",
+          "named": true
+        },
+        {
+          "type": "id_clause",
+          "named": true
+        },
+        {
+          "type": "kw_and",
+          "named": true
+        },
+        {
           "type": "kw_with",
           "named": true
         },
@@ -336,11 +402,35 @@
     "named": true
   },
   {
+    "type": "kw_and",
+    "named": true
+  },
+  {
+    "type": "kw_asc",
+    "named": true
+  },
+  {
+    "type": "kw_by",
+    "named": true
+  },
+  {
+    "type": "kw_clustering",
+    "named": true
+  },
+  {
     "type": "kw_create",
     "named": true
   },
   {
+    "type": "kw_desc",
+    "named": true
+  },
+  {
     "type": "kw_exists",
+    "named": true
+  },
+  {
+    "type": "kw_id",
     "named": true
   },
   {
@@ -353,6 +443,10 @@
   },
   {
     "type": "kw_not",
+    "named": true
+  },
+  {
+    "type": "kw_order",
     "named": true
   },
   {
