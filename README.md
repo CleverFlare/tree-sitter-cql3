@@ -11,8 +11,11 @@ This grammar is part of another project—[CQL Language Server](https://github.c
   - Qualified table names (`keyspace.table`)
   - Column definitions
   - Inline `PRIMARY KEY`
+  - `PRIMARY KEY` definition (table-level)
   - Basic data types (`int`, `text`, `uuid`, `boolean`, `timestamp`)
   - `WITH` table options
+  - `CLUSTERING ORDER BY`
+  - `ID`
 - Case-insensitive keywords (CQL-compliant)
 - Error-tolerant parsing compatible with editors & LSPs
 - Tree-sitter standard highlight captures for cross-editor compatibility, including NeoVim & VS Code
@@ -121,7 +124,7 @@ I've experienced an odd problem where NeoVim detects a language called `cqlang` 
 ```LUA
 vim.filetype.add({
   extension = {
-    cql = "cql3",
+    cql = "cql3", -- mark .cql files as using the cql3 language
   },
 })
 ```
